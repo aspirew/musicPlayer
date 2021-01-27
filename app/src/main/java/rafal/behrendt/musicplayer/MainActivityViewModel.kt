@@ -45,7 +45,7 @@ class MainActivityViewModel(private val app: Application) : AndroidViewModel(app
 
         mmr.setDataSource(afdSong.fileDescriptor, afdSong.startOffset, afdSong.length)
 
-        val newSong = Song(song, mmr.extractMetadata(MediaMetadataRetriever.METADATA_KEY_AUTHOR).toString(),
+        val newSong = Song(song, mmr.extractMetadata(MediaMetadataRetriever.METADATA_KEY_ARTIST).toString(),
                 mmr.extractMetadata(MediaMetadataRetriever.METADATA_KEY_ALBUM).toString())
 
         afdSong.close()

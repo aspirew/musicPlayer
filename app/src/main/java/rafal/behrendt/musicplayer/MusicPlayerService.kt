@@ -18,20 +18,6 @@ import java.io.InputStream
 class MusicPlayerService : Service() {
 
     val CHANNEL_ID = "musicPlayerServiceChannel"
-    private val mediaPlayer : MediaPlayer = MediaPlayer()
-
-    private val mmr = MediaMetadataRetriever()
-
-    private var currentSong = 0
-    private val listOfSongs : LinkedHashSet<String> = linkedSetOf()
-
-    val mediaplayer : MediaPlayer = MediaPlayer()
-    var song : Song? = null
-
-    override fun onCreate() {
-        super.onCreate()
-        loadSongs("music")
-    }
 
     override fun onStartCommand(intent: Intent?, flags: Int, startId: Int): Int {
         val song : String? = intent?.getStringExtra("song")
@@ -54,42 +40,6 @@ class MusicPlayerService : Service() {
 
     override fun onBind(intent: Intent?): IBinder? {
         TODO("Not yet implemented")
-    }
-
-    private fun checkIfPlaying(newSong: Song?){
-        if (song != null && newSong?.name == song?.name){
-
-        }
-        else{
-            mediaPlayer.stop()
-            mediaPlayer.release()
-            setNewSong(newSong?.name)
-        }
-    }
-
-    private fun setNewSong(songName : String?){
-
-        val am: AssetManager = this.assets
-        val afdSong: AssetFileDescriptor = am.openFd("music/${songName}/${songName}.mp3")
-
-        mediaPlayer.setDataSource(afdSong.fileDescriptor, afdSong.startOffset, afdSong.length)
-        mediaplayer.prepare()
-    }
-
-
-    private fun loadSongs(path: String): Boolean {
-        val list: Array<String>
-        try {
-            list = this.assets.list(path) as Array<String>
-            if (list.isNotEmpty()) {
-                for (file in list) {
-                    listOfSongs.add(file)
-                }
-            }
-        } catch (e: IOException) {
-            return false
-        }
-        return true
     }
 
 }
